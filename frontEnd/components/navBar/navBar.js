@@ -1,9 +1,11 @@
+import {useNavigation} from '@react-navigation/native';
 import {Button, Flex, NativeBaseProvider, Text, View} from 'native-base';
 import React, {useState} from 'react';
 import {Image, TouchableOpacity} from 'react-native';
 
 export default function navBar(props) {
   const [view, setView] = useState(null);
+  const navigation = useNavigation();
   return (
     <NativeBaseProvider>
       <View
@@ -47,9 +49,20 @@ export default function navBar(props) {
                           width: '100%',
                           height: '10%',
                         }}>
-                        <Text color={'white'} style={{fontSize: 20}}>
-                          ManageCars
-                        </Text>
+                        <TouchableOpacity
+                          style={{fontSize: 20}}
+                          onPress={e => {
+                            navigation.navigate('ManageCars');
+                          }}>
+                          <Text
+                            style={{
+                              textAlign: 'center',
+                              fontSize: 18,
+                              color: 'white',
+                            }}>
+                            Manage Cars
+                          </Text>
+                        </TouchableOpacity>
                       </Flex>
                       <Flex
                         shadow={2}
@@ -61,9 +74,45 @@ export default function navBar(props) {
                           width: '100%',
                           height: '10%',
                         }}>
-                        <Text color={'white'} style={{fontSize: 20}}>
-                          View Cars
-                        </Text>
+                        <TouchableOpacity
+                          style={{fontSize: 20}}
+                          onPress={e => {
+                            navigation.navigate('ViewCars');
+                          }}>
+                          <Text
+                            style={{
+                              textAlign: 'center',
+                              fontSize: 18,
+                              color: 'white',
+                            }}>
+                            View Cars
+                          </Text>
+                        </TouchableOpacity>
+                      </Flex>
+                      <Flex
+                        shadow={2}
+                        alignItems={'center'}
+                        justifyContent={'center'}
+                        style={{
+                          marginTop: '5%',
+                          borderColor: 'black',
+                          width: '100%',
+                          height: '10%',
+                        }}>
+                        <TouchableOpacity
+                          style={{fontSize: 20}}
+                          onPress={e => {
+                            navigation.navigate('Login');
+                          }}>
+                          <Text
+                            style={{
+                              textAlign: 'center',
+                              fontSize: 18,
+                              color: 'white',
+                            }}>
+                            Logout
+                          </Text>
+                        </TouchableOpacity>
                       </Flex>
                     </View>,
                   ) & props.checkDisplay('none')

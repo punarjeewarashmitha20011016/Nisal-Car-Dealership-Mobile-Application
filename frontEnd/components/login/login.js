@@ -1,14 +1,14 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
-  View,
   ImageBackground,
   TextInput,
   TouchableOpacity,
   Text,
+  SafeAreaView,
+  View,
+  ScrollView,
 } from 'react-native';
 
 export default function Login() {
@@ -23,10 +23,23 @@ export default function Login() {
             style={styles.bgImage}
           />
         </View>
-        <View style={{padding: 10}}>
-          <View style={styles.formInput}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+          }}>
+          <View
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: 60,
+            }}>
             <Text
-              style={{textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>
+              style={{
+                textAlign: 'center',
+                fontSize: 30,
+                fontWeight: 'bold',
+              }}>
               Welcome !
             </Text>
           </View>
@@ -46,7 +59,11 @@ export default function Login() {
           <View style={styles.formInput}>
             <TouchableOpacity>
               <Text
-                style={{textAlign: 'center', fontSize: 16, fontWeight: 'bold'}}>
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                }}>
                 Forget Password ?
               </Text>
             </TouchableOpacity>
@@ -80,8 +97,7 @@ export default function Login() {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 'bold',
-                  color: '#FFCB42',
-                  top: 20,
+                  color: '#1abc9c',
                 }}>
                 Need an account ? Register here !
               </Text>
@@ -96,13 +112,16 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: 200,
   },
   bgImage: {
+    position: 'relative',
     width: '100%',
-    height: 250,
+    height: '100%',
     bottom: 30,
   },
   formInput: {
+    position: 'relative',
     marginTop: 10,
     padding: 10,
   },
@@ -115,7 +134,7 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     padding: 15,
-    backgroundColor: '#FFCB42',
+    backgroundColor: '#1abc9c',
     borderRadius: 30,
   },
 });
