@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './screens/login';
 import UserAccount from './screens/userAccount';
 import ManageCars from './screens/manageCars';
+import ViewCars from './components/viewCars/viewCars';
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -25,6 +26,12 @@ export default function App() {
         <Stack.Screen
           name="ManageCars"
           component={ManageCars}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="ViewCars"
+          component={ViewCars}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

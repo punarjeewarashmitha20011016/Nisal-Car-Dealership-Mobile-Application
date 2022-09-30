@@ -9,7 +9,7 @@ import {
 } from 'native-base';
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import NavBar from '../navBar/navBar';
 export default function manageCars() {
   const [checkDisplay, setCheckDisplay] = useState(null);
@@ -77,7 +77,17 @@ export default function manageCars() {
               <Input placeholder="Enter Car Previous Buyer" w={'45%'}></Input>
               <Button
                 style={{width: '30%', marginLeft: '5%'}}
-                onPress={e => {}}>
+                onPress={async e => {
+                  const result = await launchImageLibrary({
+                    mediaType: 'photo',
+                    selectionLimit: 13,
+                  });
+                  let images = result.assets;
+                  images.forEach(e => {
+                    let fileName = e.fileName;
+                    let uri = e.uri;
+                  });
+                }}>
                 Upload
               </Button>
             </Flex>
