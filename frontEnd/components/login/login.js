@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   View,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 export default function Login() {
@@ -93,23 +94,36 @@ export default function Login() {
             <TouchableOpacity
               style={styles.loginBtn}
               onPress={async () => {
-                let res = await fetch(
-                  'http://192.168.1.100:3000/user/loginCheck?email=' +
-                    loginObj.email +
-                    '&password=' +
-                    loginObj.password,
-                  {
-                    method: 'GET',
-                  },
-                )
-                  .then(async res => {
-                    if ((await res.json()) === true) {
-                      navigation.navigate('ManageCars');
-                    }
-                  })
-                  .catch(async res => {
-                    Alert.alert('User Login is Unsuccessful');
-                  });
+                if ((loginObj.email === '') | (loginObj.password === '')) {
+                  Alert.alert('User Login is Unsuccessful');
+                } else {
+                  let res = await fetch(
+                    'http://192.168.1.100:3000/user/loginCheck?email=' +
+                      loginObj.email +
+                      '&password=' +
+                      loginObj.password,
+                    {
+                      method: 'GET',
+                    },
+                  )
+                    .then(async res => {
+                      let bool = await res.json();
+                      console.log(bool);
+                      if (bool === true) {
+                        console.log(bool);
+                        setLoginObj(prevState => {
+                          return {
+                            email: '',
+                            password: '',
+                          };
+                        });
+                        navigation.navigate('ManageCars');
+                      }
+                    })
+                    .catch(async res => {
+                      Alert.alert('User Login is Unsuccessful');
+                    });
+                }
               }}>
               <Text style={{textAlign: 'center', fontSize: 18, color: '#000'}}>
                 Login
