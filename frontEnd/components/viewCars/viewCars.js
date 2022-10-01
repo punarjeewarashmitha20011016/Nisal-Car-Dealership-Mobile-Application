@@ -1,5 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
-import {Button, FlatList, Flex, NativeBaseProvider, Text} from 'native-base';
+import {
+  Button,
+  FlatList,
+  Flex,
+  Input,
+  NativeBaseProvider,
+  Text,
+} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {Image, PixelRatio, TouchableOpacity} from 'react-native';
 import {carRegNoStore} from '../../store';
@@ -13,6 +20,7 @@ export default function ViewCars() {
   const [resizableBlock, setResizableBlock] = useState(40);
   const [displayForResizing, setDisplayForResizing] = useState('none');
   const navigation = useNavigation();
+  const [searchTxt, setSearchTxt] = useState(null);
   useEffect(() => {
     console.log('check ');
     dataList.splice(0, dataList.length);
@@ -37,10 +45,46 @@ export default function ViewCars() {
           height: '100%',
         }}>
         <NavBar checkDisplay={handleDisplayNone} />
+        <Flex
+          justifyContent={'center'}
+          alignItems={'center'}
+          flexDirection={'row'}
+          style={{position: 'absolute', top: 80, width: '100%'}}>
+          <Input
+            placeholder="Enter Car Date of Location for car filter"
+            w={'45%'}
+            onChangeText={e => {
+              setSearchTxt(e);
+            }}
+            value={searchTxt}></Input>
+          <Button
+            style={{width: '30%', marginLeft: '5%'}}
+            title="Open"
+            onPress={async () => {
+              console.log(searchTxt);
+              let res = await fetch(
+                'http://192.168.1.101:3000/car/searchCars?location=' +
+                  searchTxt +
+                  '&date=' +
+                  searchTxt,
+                {
+                  method: 'GET',
+                },
+              )
+                .then(async res => {
+                  let arr = await res.json();
+                  console.log(arr);
+                  setDataList(arr);
+                })
+                .catch(async res => {});
+            }}>
+            Open
+          </Button>
+        </Flex>
         <FlatList
           style={{
             position: 'absolute',
-            top: 80,
+            top: 150,
             display: checkDisplay,
           }}
           data={dataList}

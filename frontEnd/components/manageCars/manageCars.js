@@ -162,7 +162,7 @@ export default function ManageCars() {
                   isDisabled={true}
                   placeholder="Enter Car Image Url"
                   w={'45%'}
-                  value={carObj.carImage}></Input>
+                  value={carObj.date}></Input>
                 <Button
                   style={{width: '30%', marginLeft: '5%'}}
                   title="Open"

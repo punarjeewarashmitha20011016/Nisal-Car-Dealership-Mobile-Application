@@ -59,4 +59,22 @@ router.get("/", async (req, resp) => {
   }
 });
 
+router.get("/searchCars", async (req, resp) => {
+  try {
+    console.log("location = " + req.query.location);
+    let res = await Car.find();
+    let temp = [];
+    res.forEach(async (e) => {
+      if ((e.date === req.query.date) | (e.location === req.query.location)) {
+        console.log(e);
+        temp.push(e);
+      }
+    });
+    console.log("temp = " + temp);
+    resp.json(temp);
+  } catch (err) {
+    resp.json({ message: err });
+  }
+});
+
 module.exports = router;
