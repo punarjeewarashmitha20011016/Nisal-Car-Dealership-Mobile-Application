@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   SafeAreaView,
@@ -62,6 +62,25 @@ export default function UserAccount() {
         Alert.alert('User Deleting is Unsuccessful');
       });
   };
+  useEffect(() => {
+    const loadData = async () => {
+      let res = await fetch('http://192.168.1.101:3000/user/generateId', {
+        method: 'GET',
+      })
+        .then(async res => {
+          let userId = await res.json();
+          console.log(userId);
+          setUserObj(prevState => {
+            return {
+              ...userObj,
+              id: userId,
+            };
+          });
+        })
+        .catch(async res => {});
+    };
+    loadData();
+  }, []);
   return (
     <SafeAreaView>
       <ScrollView>

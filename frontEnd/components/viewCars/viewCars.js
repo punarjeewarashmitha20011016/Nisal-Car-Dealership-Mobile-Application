@@ -1,44 +1,16 @@
 import {useNavigation} from '@react-navigation/native';
-import {
-  Avatar,
-  Box,
-  Button,
-  FlatList,
-  Flex,
-  FormControl,
-  HStack,
-  NativeBaseProvider,
-  ScrollView,
-  Spacer,
-  Text,
-  View,
-  VStack,
-} from 'native-base';
+import {Button, FlatList, Flex, NativeBaseProvider, Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {
-  Alert,
-  Image,
-  PixelRatio,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {Image, PixelRatio, TouchableOpacity} from 'react-native';
 import {carRegNoStore} from '../../store';
 import NavBar from '../navBar/navBar';
 export default function ViewCars() {
   const [checkDisplay, setCheckDisplay] = useState(null);
-  const styles = StyleSheet.create({
-    inputContainers: {
-      width: '100%',
-      marginTop: '3%',
-      marginBottom: '3%',
-      elevation: 1,
-    },
-  });
   const handleDisplayNone = view => {
     setCheckDisplay(view);
   };
   const [dataList, setDataList] = useState([]);
-  const [resizableBlock, setResiazbleBlock] = useState(40);
+  const [resizableBlock, setResizableBlock] = useState(40);
   const [displayForResizing, setDisplayForResizing] = useState('none');
   const navigation = useNavigation();
   useEffect(() => {
@@ -84,11 +56,11 @@ export default function ViewCars() {
                 flexDirection: 'column',
               }}
               onLongPress={() => {
-                setResiazbleBlock(40);
+                setResizableBlock(40);
                 setDisplayForResizing('none');
               }}
               onPress={() => {
-                setResiazbleBlock(60);
+                setResizableBlock(60);
                 setDisplayForResizing('flex');
               }}>
               <Flex

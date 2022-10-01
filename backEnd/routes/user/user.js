@@ -71,4 +71,27 @@ router.get("/loginCheck", async (req, resp) => {
     resp.json({ message: err });
   }
 });
+
+router.get("/generateId", async (req, resp) => {
+  try {
+    let res = await User.find();
+    let response = undefined;
+    let temp = "";
+    res.forEach(async (e) => {
+      console.log(e);
+      let id = e.id.split("-")[1];
+      id = parseInt(id + 1);
+      if (id <= 9) {
+        temp = "U-" + id;
+      } else if (id <= 99) {
+        temp = "U-0" + id;
+      } else {
+        temp = "U-00" + id;
+      }
+    });
+    resp.json(temp);
+  } catch (err) {
+    resp.json({ message: err });
+  }
+});
 module.exports = router;
