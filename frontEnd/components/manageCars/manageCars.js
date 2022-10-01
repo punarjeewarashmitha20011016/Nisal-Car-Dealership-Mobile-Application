@@ -5,10 +5,11 @@ import {
   Input,
   NativeBaseProvider,
   ScrollView,
+  Text,
   View,
 } from 'native-base';
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import NavBar from '../navBar/navBar';
 export default function manageCars() {
@@ -89,6 +90,40 @@ export default function manageCars() {
                   });
                 }}>
                 Upload
+              </Button>
+            </Flex>
+          </View>
+          <View style={styles.inputContainers}>
+            <Flex
+              justifyContent={'center'}
+              alignItems={'center'}
+              flexDirection={'row'}>
+              <Button
+                style={{width: '80%', marginLeft: '5%'}}
+                onPress={async e => {
+                  // fetch('http://192.168.1.100:3000/user', {method: 'GET'})
+                  //   .then(res => {
+                  //     console.log(res);
+                  //   })
+                  //   .catch(res => {
+                  //     console.log(res);
+                  //   });
+
+                  fetch('http://192.168.1.100:3000/user', {
+                    method: 'POST',
+                    body: JSON.stringify({id: 'asdasdas'}),
+                    headers: {
+                      'Content-Type': 'application/json;charset=UTF-8',
+                    },
+                  })
+                    .then(res => {
+                      console.log(res);
+                    })
+                    .catch(res => {
+                      console.log(res);
+                    });
+                }}>
+                Save
               </Button>
             </Flex>
           </View>

@@ -1,5 +1,6 @@
 import {
   Button,
+  FlatList,
   Flex,
   FormControl,
   NativeBaseProvider,
@@ -26,12 +27,12 @@ export default function ViewCars() {
     <NativeBaseProvider>
       <Flex flexDirection={'column'}>
         <NavBar checkDisplay={handleDisplayNone} />
-        <ScrollView
+        <FlatList
           style={{
             position: 'relative',
             top: 50,
             display: checkDisplay,
-          }}></ScrollView>
+          }}></FlatList>
       </Flex>
     </NativeBaseProvider>
   );

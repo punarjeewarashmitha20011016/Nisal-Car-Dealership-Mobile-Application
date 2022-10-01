@@ -1,35 +1,114 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
-  ImageBackground,
   TextInput,
   TouchableOpacity,
   Text,
+  Alert,
 } from 'react-native';
-
-import {Button} from 'native-base';
 
 export default function userAccount() {
   const navigation = useNavigation();
 
+  const [userObj, setUserObj] = useState({
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const saveUser = async () => {
+    await fetch('http://192.168.1.100:3000/user', {
+      method: 'POST',
+      body: JSON.stringify(userObj),
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(async res => {
+        Alert.alert('User Saved Successfully');
+      })
+      .catch(async res => {
+        Alert.alert('User Saving is Unsuccessful');
+      });
+  };
+  const updateUser = async () => {
+    await fetch('http://192.168.1.100:3000/user?id=' + userObj.id, {
+      method: 'PUT',
+      body: JSON.stringify(userObj),
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(async res => {
+        Alert.alert('User Updated Successfully');
+      })
+      .catch(async res => {
+        Alert.alert('User Updating is Unsuccessful');
+      });
+  };
+  const deleteUser = async () => {
+    await fetch('http://192.168.1.100:3000/user?id=' + userObj.id, {
+      method: 'DELETE',
+    })
+      .then(async res => {
+        Alert.alert('User Deleted Successfully');
+      })
+      .catch(async res => {
+        Alert.alert('User Deleting is Unsuccessful');
+      });
+  };
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={{padding: 10}}>
           <View style={styles.formInput}>
-            <TextInput style={styles.textInput} placeholder="Enter your Id" />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Enter your Id"
+              onChangeText={e => {
+                setUserObj(prevState => {
+                  return {
+                    ...userObj,
+                    id: e,
+                  };
+                });
+              }}
+              value={userObj.id}
+            />
           </View>
           <View style={styles.formInput}>
-            <TextInput style={styles.textInput} placeholder="Enter your Name" />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Enter your Name"
+              onChangeText={e => {
+                setUserObj(prevState => {
+                  return {
+                    ...userObj,
+                    name: e,
+                  };
+                });
+              }}
+              value={userObj.name}
+            />
           </View>
           <View style={styles.formInput}>
             <TextInput
               style={styles.textInput}
               placeholder="Enter your email address"
+              onChangeText={e => {
+                setUserObj(prevState => {
+                  return {
+                    ...userObj,
+                    email: e,
+                  };
+                });
+              }}
+              value={userObj.email}
             />
           </View>
           <View style={styles.formInput}>
@@ -37,14 +116,23 @@ export default function userAccount() {
               style={styles.textInput}
               placeholder="Password"
               secureTextEntry={true}
+              onChangeText={e => {
+                setUserObj(prevState => {
+                  return {
+                    ...userObj,
+                    password: e,
+                  };
+                });
+              }}
+              value={userObj.password}
             />
           </View>
 
           <View style={styles.formInput}>
             <TouchableOpacity
               style={styles.saveBtn}
-              onPress={() => {
-                //navigation.navigate('HomePage');
+              onPress={async () => {
+                let res = await saveUser();
               }}>
               <Text style={{textAlign: 'center', fontSize: 18, color: 'white'}}>
                 Save
@@ -55,8 +143,8 @@ export default function userAccount() {
           <View style={styles.formInput}>
             <TouchableOpacity
               style={styles.updateBtn}
-              onPress={() => {
-                //navigation.navigate('HomePage');
+              onPress={async e => {
+                let res = await updateUser();
               }}>
               <Text style={{textAlign: 'center', fontSize: 18, color: 'white'}}>
                 Update
@@ -68,8 +156,8 @@ export default function userAccount() {
             <TouchableOpacity
               style={styles.deleteBtn}
               c
-              onPress={() => {
-                //navigation.navigate('HomePage');
+              onPress={async () => {
+                let res = await deleteUser();
               }}>
               <Text style={{textAlign: 'center', fontSize: 18, color: 'white'}}>
                 Delete
