@@ -14,6 +14,7 @@ export default function ViewCars() {
   const [displayForResizing, setDisplayForResizing] = useState('none');
   const navigation = useNavigation();
   useEffect(() => {
+    console.log('check ');
     dataList.splice(0, dataList.length);
     const loadData = async () => {
       let res = await fetch('http://192.168.1.101:3000/car', {method: 'GET'})

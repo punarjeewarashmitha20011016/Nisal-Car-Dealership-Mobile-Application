@@ -13,6 +13,14 @@ const Car = mongoose.Schema({
     type: Number,
     required: true,
   },
+  date: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
+  },
   carImage: {
     type: String,
     required: true,

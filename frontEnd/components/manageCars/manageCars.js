@@ -13,20 +13,24 @@ import {Alert, StyleSheet} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {carRegNoStore} from '../../store';
 import NavBar from '../navBar/navBar';
+import DatePicker from 'react-native-date-picker';
 export default function ManageCars() {
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
   const [carObj, setCarObj] = useState({
     carRegNo: '',
     brand: '',
     price: '',
-    previousBuyer: '',
+    date: '',
+    location: '',
     carImage: '',
   });
   const [checkDisplay, setCheckDisplay] = useState(null);
   const styles = StyleSheet.create({
     inputContainers: {
       width: '100%',
-      marginTop: '3%',
-      marginBottom: '3%',
+      marginTop: '2%',
+      marginBottom: '2%',
       elevation: 1,
     },
   });
@@ -124,21 +128,69 @@ export default function ManageCars() {
           </View>
           <View style={styles.inputContainers}>
             <Flex justifyContent={'flex-start'} style={{marginStart: '10%'}}>
-              <FormControl.Label>Previous Buyer</FormControl.Label>
+              <FormControl.Label>Date</FormControl.Label>
+            </Flex>
+            <Flex justifyContent={'center'} alignItems={'center'}>
+              <DatePicker
+                modal
+                open={open}
+                date={date}
+                onConfirm={date => {
+                  setOpen(false);
+                  setDate(date);
+                  setCarObj(prevState => {
+                    return {
+                      ...carObj,
+                      date:
+                        date.getDate() +
+                        '-' +
+                        date.getMonth() +
+                        '-' +
+                        date.getFullYear(),
+                    };
+                  });
+                }}
+                onCancel={() => {
+                  setOpen(false);
+                }}
+              />
+              <Flex
+                justifyContent={'center'}
+                alignItems={'center'}
+                flexDirection={'row'}>
+                <Input
+                  isDisabled={true}
+                  placeholder="Enter Car Image Url"
+                  w={'45%'}
+                  value={carObj.carImage}></Input>
+                <Button
+                  style={{width: '30%', marginLeft: '5%'}}
+                  title="Open"
+                  onPress={() => {
+                    setOpen(true);
+                  }}>
+                  Open
+                </Button>
+              </Flex>
+            </Flex>
+          </View>
+          <View style={styles.inputContainers}>
+            <Flex justifyContent={'flex-start'} style={{marginStart: '10%'}}>
+              <FormControl.Label>Location</FormControl.Label>
             </Flex>
             <Flex justifyContent={'center'} alignItems={'center'}>
               <Input
-                placeholder="Enter Car Previous Buyer"
+                placeholder="Enter Location"
                 w={'80%'}
                 onChangeText={e => {
                   setCarObj(prevState => {
                     return {
                       ...carObj,
-                      previousBuyer: e,
+                      location: e,
                     };
                   });
                 }}
-                value={carObj.previousBuyer}></Input>
+                value={carObj.location}></Input>
             </Flex>
           </View>
           <View style={styles.inputContainers}>

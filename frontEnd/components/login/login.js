@@ -23,7 +23,7 @@ export default function Login() {
       <ScrollView>
         <View style={styles.container}>
           <ImageBackground
-            source={require('../../assets/image1.png')}
+            source={require('../../assets/64420-removebg-preview.png')}
             style={styles.bgImage}
           />
         </View>
@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     height: '100%',
-    bottom: 30,
   },
   formInput: {
     position: 'relative',
