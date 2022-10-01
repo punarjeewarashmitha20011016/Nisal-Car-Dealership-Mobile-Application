@@ -140,7 +140,7 @@ export default function ManageCars() {
               flexDirection={'row'}>
               <Input
                 isDisabled={true}
-                placeholder="Enter Car Previous Buyer"
+                placeholder="Enter Car Image Url"
                 w={'45%'}
                 value={carObj.carImage}></Input>
               <Button
