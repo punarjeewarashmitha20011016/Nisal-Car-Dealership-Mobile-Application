@@ -56,4 +56,19 @@ router.get("/", async (req, resp) => {
     resp.json({ message: err });
   }
 });
+
+router.get("/loginCheck", async (req, resp) => {
+  try {
+    let res = await User.find();
+    let response = undefined;
+    res.forEach(async (e) => {
+      if ((e.email === req.query.email) & (e.password === req.query.password)) {
+        response = true;
+      }
+    });
+    resp.json(response);
+  } catch (err) {
+    resp.json({ message: err });
+  }
+});
 module.exports = router;

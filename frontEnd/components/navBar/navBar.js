@@ -3,7 +3,7 @@ import {Button, Flex, NativeBaseProvider, Text, View} from 'native-base';
 import React, {useState} from 'react';
 import {Image, TouchableOpacity} from 'react-native';
 
-export default function navBar(props) {
+export default function NavBar(props) {
   const [view, setView] = useState(null);
   const navigation = useNavigation();
   return (

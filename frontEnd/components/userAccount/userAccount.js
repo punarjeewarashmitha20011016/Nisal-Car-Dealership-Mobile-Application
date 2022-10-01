@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 
-export default function userAccount() {
+export default function UserAccount() {
   const navigation = useNavigation();
 
   const [userObj, setUserObj] = useState({

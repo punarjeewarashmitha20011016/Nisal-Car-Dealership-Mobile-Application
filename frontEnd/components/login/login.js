@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   StyleSheet,
@@ -13,7 +13,10 @@ import {
 
 export default function Login() {
   const navigation = useNavigation();
-
+  const [loginObj, setLoginObj] = useState({
+    email: '',
+    password: '',
+  });
   return (
     <SafeAreaView>
       <ScrollView>
@@ -47,6 +50,15 @@ export default function Login() {
             <TextInput
               style={styles.textInput}
               placeholder="Enter your email address"
+              onChangeText={e => {
+                setLoginObj(prevState => {
+                  return {
+                    ...loginObj,
+                    email: e,
+                  };
+                });
+              }}
+              value={loginObj.email}
             />
           </View>
           <View style={styles.formInput}>
@@ -54,6 +66,15 @@ export default function Login() {
               style={styles.textInput}
               placeholder="Password"
               secureTextEntry={true}
+              onChangeText={e => {
+                setLoginObj(prevState => {
+                  return {
+                    ...loginObj,
+                    password: e,
+                  };
+                });
+              }}
+              value={loginObj.password}
             />
           </View>
           <View style={styles.formInput}>
@@ -71,8 +92,24 @@ export default function Login() {
           <View style={styles.formInput}>
             <TouchableOpacity
               style={styles.loginBtn}
-              onPress={() => {
-                navigation.navigate('ManageCars');
+              onPress={async () => {
+                let res = await fetch(
+                  'http://192.168.1.100:3000/user/loginCheck?email=' +
+                    loginObj.email +
+                    '&password=' +
+                    loginObj.password,
+                  {
+                    method: 'GET',
+                  },
+                )
+                  .then(async res => {
+                    if ((await res.json()) === true) {
+                      navigation.navigate('ManageCars');
+                    }
+                  })
+                  .catch(async res => {
+                    Alert.alert('User Login is Unsuccessful');
+                  });
               }}>
               <Text style={{textAlign: 'center', fontSize: 18, color: '#000'}}>
                 Login

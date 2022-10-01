@@ -12,7 +12,7 @@ import React, {useState} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import NavBar from '../navBar/navBar';
-export default function manageCars() {
+export default function ManageCars() {
   const [checkDisplay, setCheckDisplay] = useState(null);
   const styles = StyleSheet.create({
     inputContainers: {
