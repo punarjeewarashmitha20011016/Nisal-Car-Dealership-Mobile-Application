@@ -117,7 +117,7 @@ export default function Login() {
                             password: '',
                           };
                         });
-                        navigation.navigate('ManageCars');
+                        navigation.navigate('ViewCars');
                       }
                     })
                     .catch(async res => {

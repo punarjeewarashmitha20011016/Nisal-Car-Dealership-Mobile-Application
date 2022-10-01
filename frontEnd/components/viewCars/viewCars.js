@@ -25,8 +25,8 @@ export default function ViewCars() {
         .catch(async res => {});
     };
     loadData();
-  }, [dataList]);
-
+  }, []);
+  const [checkSelectedCarReg, setCheckSelectedCarReg] = useState(null);
   return (
     <NativeBaseProvider>
       <Flex
@@ -45,13 +45,17 @@ export default function ViewCars() {
           data={dataList}
           renderItem={({item}) => (
             <TouchableOpacity
+              key={item.carRegNo}
               style={{
                 backgroundColor: '#1abc9c',
                 position: 'relative',
                 borderWidth: 1,
                 marginBottom: '5%',
                 padding: 5,
-                height: PixelRatio.getPixelSizeForLayoutSize(resizableBlock),
+                height:
+                  item.carRegNo === checkSelectedCarReg
+                    ? PixelRatio.getPixelSizeForLayoutSize(resizableBlock)
+                    : PixelRatio.getPixelSizeForLayoutSize(40),
                 display: 'flex',
                 flexDirection: 'column',
               }}
@@ -60,6 +64,8 @@ export default function ViewCars() {
                 setDisplayForResizing('none');
               }}
               onPress={() => {
+                setCheckSelectedCarReg(item.carRegNo);
+                console.log(item.carRegNo);
                 setResizableBlock(60);
                 setDisplayForResizing('flex');
               }}>
@@ -152,7 +158,10 @@ export default function ViewCars() {
                   position: 'relative',
                   width: '100%',
                   height: PixelRatio.getPixelSizeForLayoutSize(20),
-                  display: displayForResizing,
+                  display:
+                    item.carRegNo === checkSelectedCarReg
+                      ? displayForResizing
+                      : 'none',
                 }}>
                 <Flex
                   flexDirection={'row'}
