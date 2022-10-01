@@ -22,7 +22,7 @@ export default function UserAccount() {
   });
 
   const saveUser = async () => {
-    await fetch('http://192.168.1.100:3000/user', {
+    await fetch('http://192.168.1.101:3000/user', {
       method: 'POST',
       body: JSON.stringify(userObj),
       headers: {
@@ -37,7 +37,7 @@ export default function UserAccount() {
       });
   };
   const updateUser = async () => {
-    await fetch('http://192.168.1.100:3000/user?id=' + userObj.id, {
+    await fetch('http://192.168.1.101:3000/user?id=' + userObj.id, {
       method: 'PUT',
       body: JSON.stringify(userObj),
       headers: {
@@ -52,7 +52,7 @@ export default function UserAccount() {
       });
   };
   const deleteUser = async () => {
-    await fetch('http://192.168.1.100:3000/user?id=' + userObj.id, {
+    await fetch('http://192.168.1.101:3000/user?id=' + userObj.id, {
       method: 'DELETE',
     })
       .then(async res => {
@@ -68,6 +68,7 @@ export default function UserAccount() {
         <View style={{padding: 10}}>
           <View style={styles.formInput}>
             <TextInput
+              editable={false}
               style={styles.textInput}
               placeholder="Enter your Id"
               onChangeText={e => {

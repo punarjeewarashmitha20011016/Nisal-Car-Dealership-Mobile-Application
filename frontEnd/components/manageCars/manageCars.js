@@ -8,9 +8,10 @@ import {
   Text,
   View,
 } from 'native-base';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, StyleSheet} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {carRegNoStore} from '../../store';
 import NavBar from '../navBar/navBar';
 export default function ManageCars() {
   const [carObj, setCarObj] = useState({
@@ -34,6 +35,7 @@ export default function ManageCars() {
   };
 
   const clearFields = () => {
+    carRegNoStore.carRegNo = '';
     setCarObj(prevState => {
       return {
         carRegNo: '',
@@ -44,6 +46,15 @@ export default function ManageCars() {
       };
     });
   };
+  useEffect(() => {
+    console.log(carRegNoStore.carRegNo);
+    setCarObj(prevState => {
+      return {
+        ...carObj,
+        carRegNo: carRegNoStore.carRegNo,
+      };
+    });
+  }, []);
   return (
     <NativeBaseProvider>
       <Flex flexDirection={'column'}>
@@ -176,7 +187,7 @@ export default function ManageCars() {
                 style={{width: '23.3%', marginLeft: '5%', marginRight: '5%'}}
                 onPress={async e => {
                   carObj.carRegNo != ''
-                    ? fetch('http://192.168.1.100:3000/car', {
+                    ? fetch('http://192.168.1.101:3000/car', {
                         method: 'POST',
                         body: JSON.stringify(carObj),
                         headers: {
@@ -203,22 +214,26 @@ export default function ManageCars() {
                 style={{width: '23.3%', marginLeft: '5%', marginRight: '5%'}}
                 onPress={async e => {
                   carObj.carRegNo != ''
-                    ? fetch('http://192.168.1.100:3000/car', {
-                        method: 'POST',
-                        body: JSON.stringify(carObj),
-                        headers: {
-                          'Content-Type': 'application/json;charset=UTF-8',
+                    ? fetch(
+                        'http://192.168.1.101:3000/car?carRegNo=' +
+                          carObj.carRegNo,
+                        {
+                          method: 'PUT',
+                          body: JSON.stringify(carObj),
+                          headers: {
+                            'Content-Type': 'application/json;charset=UTF-8',
+                          },
                         },
-                      })
+                      )
                         .then(res => {
                           clearFields();
                           console.log(res);
-                          Alert.alert('Car Saved Successfully');
+                          Alert.alert('Car Updated Successfully');
                         })
                         .catch(res => {
                           clearFields();
                           console.log(res);
-                          Alert.alert('Car Saving is Unsuccessful');
+                          Alert.alert('Car Updating is Unsuccessful');
                         })
                     : Alert.alert('Please Fill Relevant Fields');
                 }}>
@@ -230,22 +245,22 @@ export default function ManageCars() {
                 style={{width: '23.3%', marginLeft: '5%', marginRight: '5%'}}
                 onPress={async e => {
                   carObj.carRegNo != ''
-                    ? fetch('http://192.168.1.100:3000/car', {
-                        method: 'POST',
-                        body: JSON.stringify(carObj),
-                        headers: {
-                          'Content-Type': 'application/json;charset=UTF-8',
+                    ? fetch(
+                        'http://192.168.1.101:3000/car?carRegNo=' +
+                          carObj.carRegNo,
+                        {
+                          method: 'DELETE',
                         },
-                      })
+                      )
                         .then(res => {
                           clearFields();
                           console.log(res);
-                          Alert.alert('Car Saved Successfully');
+                          Alert.alert('Car Deleted Successfully');
                         })
                         .catch(res => {
                           console.log(res);
                           clearFields();
-                          Alert.alert('Car Saving is Unsuccessful');
+                          Alert.alert('Car Deleting is Unsuccessful');
                         })
                     : Alert.alert('Please Fill Relevant Fields');
                 }}>

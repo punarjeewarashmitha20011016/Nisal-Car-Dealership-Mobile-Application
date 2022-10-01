@@ -18,12 +18,13 @@ router.put("/", async (req, resp) => {
     let obj = undefined;
     let response = undefined;
     res.forEach(async (e) => {
-      if (e.id === req.query.id) {
+      if (e.carRegNo === req.query.carRegNo) {
         obj = e;
-        obj.name = req.body.name;
-        obj.email = req.body.email;
-        obj.password = req.body.password;
-        console.log(obj);
+        obj.brand = req.body.brand;
+        obj.price = req.body.price;
+        obj.previousBuyer = req.body.previousBuyer;
+        obj.carImage = req.body.carImage;
+        console.log("Obj = ", obj);
         response = e.save(obj);
       }
     });
@@ -38,7 +39,7 @@ router.delete("/", async (req, resp) => {
     let arr = await Car.find();
     let response = undefined;
     arr.forEach(async (e) => {
-      if (e.id === req.query.id) {
+      if (e.carRegNo === req.query.carRegNo) {
         response = await e.remove();
       }
     });
@@ -57,18 +58,4 @@ router.get("/", async (req, resp) => {
   }
 });
 
-router.get("/loginCheck", async (req, resp) => {
-  try {
-    let res = await Car.find();
-    let response = undefined;
-    res.forEach(async (e) => {
-      if ((e.email === req.query.email) & (e.password === req.query.password)) {
-        response = true;
-      }
-    });
-    resp.json(response);
-  } catch (err) {
-    resp.json({ message: err });
-  }
-});
 module.exports = router;

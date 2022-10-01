@@ -98,7 +98,7 @@ export default function Login() {
                 //   Alert.alert('User Login is Unsuccessful');
                 // } else {
                 //   let res = await fetch(
-                //     'http://192.168.1.100:3000/user/loginCheck?email=' +
+                //     'http://192.168.1.101:3000/user/loginCheck?email=' +
                 //       loginObj.email +
                 //       '&password=' +
                 //       loginObj.password,
@@ -124,7 +124,7 @@ export default function Login() {
                 //       Alert.alert('User Login is Unsuccessful');
                 //     });
                 // }
-                navigation.navigate('ManageCars');
+                navigation.navigate('ViewCars');
               }}>
               <Text style={{textAlign: 'center', fontSize: 18, color: '#000'}}>
                 Login

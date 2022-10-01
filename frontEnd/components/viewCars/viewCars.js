@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import {
   Avatar,
   Box,
@@ -21,6 +22,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {carRegNoStore} from '../../store';
 import NavBar from '../navBar/navBar';
 export default function ViewCars() {
   const [checkDisplay, setCheckDisplay] = useState(null);
@@ -37,13 +39,13 @@ export default function ViewCars() {
   };
   const [dataList, setDataList] = useState([]);
   const [resizableBlock, setResiazbleBlock] = useState(40);
-
+  const [displayForResizing, setDisplayForResizing] = useState('none');
+  const navigation = useNavigation();
   useEffect(() => {
     dataList.splice(0, dataList.length);
     const loadData = async () => {
       let res = await fetch('http://192.168.1.101:3000/car', {method: 'GET'})
         .then(async res => {
-          console.log('aaa');
           let arr = await res.json();
           console.log(arr);
           setDataList(arr);
@@ -51,14 +53,23 @@ export default function ViewCars() {
         .catch(async res => {});
     };
     loadData();
-  }, []);
+  }, [dataList]);
 
   return (
     <NativeBaseProvider>
-      <Flex flexDirection={'column'}>
+      <Flex
+        flexDirection={'column'}
+        style={{
+          backgroundColor: '#f7f1e3',
+          height: '100%',
+        }}>
         <NavBar checkDisplay={handleDisplayNone} />
         <FlatList
-          style={{position: 'relative', top: 80, display: checkDisplay}}
+          style={{
+            position: 'absolute',
+            top: 80,
+            display: checkDisplay,
+          }}
           data={dataList}
           renderItem={({item}) => (
             <TouchableOpacity
@@ -69,19 +80,23 @@ export default function ViewCars() {
                 marginBottom: '5%',
                 padding: 5,
                 height: PixelRatio.getPixelSizeForLayoutSize(resizableBlock),
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onLongPress={() => {
                 setResiazbleBlock(40);
+                setDisplayForResizing('none');
               }}
               onPress={() => {
                 setResiazbleBlock(60);
+                setDisplayForResizing('flex');
               }}>
               <Flex
                 flexDirection={'row'}
                 style={{
                   position: 'relative',
                   width: '100%',
-                  height: '100%',
+                  height: PixelRatio.getPixelSizeForLayoutSize(36),
                 }}>
                 <Flex
                   flexDirection={'row'}
@@ -114,8 +129,6 @@ export default function ViewCars() {
                       borderColor: 'black',
                     }}>
                     <Flex
-                      alignItems={'center'}
-                      justifyContent={'center'}
                       style={{
                         width: '100%',
                         height: '30%',
@@ -124,14 +137,12 @@ export default function ViewCars() {
                       }}>
                       <Text
                         color={'white'}
-                        fontSize={'2xl'}
-                        style={{marginBottom: 10}}>
-                        {item.brand}
+                        fontSize={'md'}
+                        style={{marginBottom: 10, marginLeft: '10%'}}>
+                        Brand : {item.brand}
                       </Text>
                     </Flex>
                     <Flex
-                      alignItems={'center'}
-                      justifyContent={'center'}
                       style={{
                         width: '100%',
                         height: '30%',
@@ -140,12 +151,58 @@ export default function ViewCars() {
                       }}>
                       <Text
                         color={'white'}
-                        fontSize={'2xl'}
-                        style={{marginBottom: 10}}>
-                        {item.brand}
+                        fontSize={'md'}
+                        style={{marginBottom: 10, marginLeft: '10%'}}>
+                        Reg No : {item.carRegNo}
+                      </Text>
+                    </Flex>
+                    <Flex
+                      style={{
+                        width: '100%',
+                        height: '40%',
+                        borderWidth: 1,
+                        borderColor: 'white',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        color={'white'}
+                        fontSize={'md'}
+                        style={{marginBottom: 10, marginLeft: '10%'}}>
+                        Price : {item.price}
                       </Text>
                     </Flex>
                   </Flex>
+                </Flex>
+              </Flex>
+              <Flex
+                flexDirection={'row'}
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: PixelRatio.getPixelSizeForLayoutSize(20),
+                  display: displayForResizing,
+                }}>
+                <Flex
+                  flexDirection={'row'}
+                  alignItems={'center'}
+                  justifyContent={'center'}
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    borderWidth: 1,
+                    borderColor: 'black',
+                  }}>
+                  <Button
+                    fontSize={'sm'}
+                    style={{height: '80%'}}
+                    variant={'subtle'}
+                    onPress={e => {
+                      carRegNoStore.carRegNo = item.carRegNo;
+                      navigation.navigate('ManageCars');
+                    }}>
+                    Manage Details
+                  </Button>
                 </Flex>
               </Flex>
             </TouchableOpacity>
