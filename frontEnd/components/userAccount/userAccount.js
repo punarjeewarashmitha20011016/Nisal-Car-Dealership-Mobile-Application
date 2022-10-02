@@ -12,8 +12,6 @@ import {
 } from 'react-native';
 
 export default function UserAccount() {
-  const navigation = useNavigation();
-
   const [userObj, setUserObj] = useState({
     id: '',
     name: '',
