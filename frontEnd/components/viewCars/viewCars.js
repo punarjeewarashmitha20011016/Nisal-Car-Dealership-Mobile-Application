@@ -48,10 +48,15 @@ export default function ViewCars() {
           justifyContent={'center'}
           alignItems={'center'}
           flexDirection={'row'}
-          style={{position: 'absolute', top: 80, width: '100%'}}>
+          style={{
+            position: 'absolute',
+            top: 80,
+            width: '100%',
+            display: checkDisplay,
+          }}>
           <Input
             placeholder="Enter Car Date of Location for car filter"
-            w={'45%'}
+            w={'55%'}
             onChangeText={async e => {
               setSearchTxt(e);
               if (e == '') {
@@ -60,7 +65,7 @@ export default function ViewCars() {
             }}
             value={searchTxt}></Input>
           <Button
-            style={{width: '30%', marginLeft: '5%'}}
+            style={{width: '35%', marginLeft: '5%'}}
             title="Open"
             onPress={async () => {
               console.log(searchTxt);
@@ -165,7 +170,7 @@ export default function ViewCars() {
                       <Text
                         color={'white'}
                         fontSize={'md'}
-                        style={{marginBottom: 10, marginLeft: '10%'}}>
+                        style={{marginBottom: 10, marginLeft: '6%'}}>
                         Brand : {item.brand}
                       </Text>
                     </Flex>
@@ -179,7 +184,7 @@ export default function ViewCars() {
                       <Text
                         color={'white'}
                         fontSize={'md'}
-                        style={{marginBottom: 10, marginLeft: '10%'}}>
+                        style={{marginBottom: 10, marginLeft: '6%'}}>
                         Reg No : {item.carRegNo}
                       </Text>
                     </Flex>
@@ -194,7 +199,7 @@ export default function ViewCars() {
                       <Text
                         color={'white'}
                         fontSize={'md'}
-                        style={{marginBottom: 10, marginLeft: '10%'}}>
+                        style={{marginBottom: 10, marginLeft: '6%'}}>
                         Price : {item.price}
                       </Text>
                     </Flex>
@@ -223,16 +228,67 @@ export default function ViewCars() {
                     borderWidth: 1,
                     borderColor: 'black',
                   }}>
-                  <Button
-                    fontSize={'sm'}
-                    style={{height: '80%'}}
-                    variant={'subtle'}
-                    onPress={e => {
-                      carRegNoStore.carRegNo = item.carRegNo;
-                      navigation.navigate('ManageCars');
+                  <Flex
+                    flexDirection={'column'}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    style={{
+                      position: 'relative',
+                      width: '50%',
+                      height: '100%',
+                      borderWidth: 1,
+                      borderColor: 'black',
                     }}>
-                    Manage Details
-                  </Button>
+                    <Button
+                      fontSize={'sm'}
+                      style={{height: '80%'}}
+                      variant={'subtle'}
+                      onPress={e => {
+                        carRegNoStore.carRegNo = item.carRegNo;
+                        navigation.navigate('ManageCars');
+                      }}>
+                      Manage Details
+                    </Button>
+                  </Flex>
+                  <Flex
+                    style={{
+                      width: '50%',
+                      height: '100%',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      justifyContent: 'center',
+                    }}>
+                    <Flex
+                      style={{
+                        width: '100%',
+                        height: '50%',
+                        borderWidth: 1,
+                        borderColor: 'white',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        color={'white'}
+                        fontSize={'sm'}
+                        style={{marginBottom: 10, marginLeft: '6%'}}>
+                        Location : {item.location}
+                      </Text>
+                    </Flex>
+                    <Flex
+                      style={{
+                        width: '100%',
+                        height: '50%',
+                        borderWidth: 1,
+                        borderColor: 'white',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        color={'white'}
+                        fontSize={'sm'}
+                        style={{marginBottom: 10, marginLeft: '6%'}}>
+                        Date : {item.date}
+                      </Text>
+                    </Flex>
+                  </Flex>
                 </Flex>
               </Flex>
             </TouchableOpacity>
