@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {
   SafeAreaView,
   ScrollView,
