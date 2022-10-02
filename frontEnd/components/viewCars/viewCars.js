@@ -21,18 +21,17 @@ export default function ViewCars() {
   const [displayForResizing, setDisplayForResizing] = useState('none');
   const navigation = useNavigation();
   const [searchTxt, setSearchTxt] = useState(null);
-  useEffect(() => {
-    console.log('check ');
+  const loadData = async () => {
     dataList.splice(0, dataList.length);
-    const loadData = async () => {
-      let res = await fetch('http://192.168.1.101:3000/car', {method: 'GET'})
-        .then(async res => {
-          let arr = await res.json();
-          console.log(arr);
-          setDataList(arr);
-        })
-        .catch(async res => {});
-    };
+    let res = await fetch('http://192.168.1.101:3000/car', {method: 'GET'})
+      .then(async res => {
+        let arr = await res.json();
+        console.log(arr);
+        setDataList(arr);
+      })
+      .catch(async res => {});
+  };
+  useEffect(() => {
     loadData();
   }, []);
   const [checkSelectedCarReg, setCheckSelectedCarReg] = useState(null);
@@ -53,8 +52,11 @@ export default function ViewCars() {
           <Input
             placeholder="Enter Car Date of Location for car filter"
             w={'45%'}
-            onChangeText={e => {
+            onChangeText={async e => {
               setSearchTxt(e);
+              if (e == '') {
+                loadData();
+              }
             }}
             value={searchTxt}></Input>
           <Button
@@ -62,21 +64,23 @@ export default function ViewCars() {
             title="Open"
             onPress={async () => {
               console.log(searchTxt);
-              let res = await fetch(
-                'http://192.168.1.101:3000/car/searchCars?location=' +
-                  searchTxt +
-                  '&date=' +
-                  searchTxt,
-                {
-                  method: 'GET',
-                },
-              )
-                .then(async res => {
-                  let arr = await res.json();
-                  console.log(arr);
-                  setDataList(arr);
-                })
-                .catch(async res => {});
+              searchTxt == ''
+                ? loadData()
+                : await fetch(
+                    'http://192.168.1.101:3000/car/searchCars?location=' +
+                      searchTxt +
+                      '&date=' +
+                      searchTxt,
+                    {
+                      method: 'GET',
+                    },
+                  )
+                    .then(async res => {
+                      let arr = await res.json();
+                      console.log(arr);
+                      setDataList(arr);
+                    })
+                    .catch(async res => {});
             }}>
             Open
           </Button>
